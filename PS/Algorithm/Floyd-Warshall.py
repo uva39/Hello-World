@@ -17,7 +17,8 @@ for i in range(n):
 for k in range(n):
     for i in range(n):
         for j in range(n):
-            if i == j: continue
+            if i == j: 
+                continue
             distance[i][j] = min(distance[i][j], distance[i][k] + distance[k][j])
 
 for i in range(n):

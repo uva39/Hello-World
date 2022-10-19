@@ -1,44 +1,51 @@
 import sys
-sys.setrecursionlimit(4000)
+sys.setrecursionlimit(4000) # 분할정복 시 재귀깊이 늘리기
 from math import gcd
 input = sys.stdin.readline
 
-def Miller_Rabin(n:int,_a:int) -> bool:
+# 필요 시 (2, 7, 61)보다 더 많은 소수 사용
+checking_primes = (2, 7, 61)
+
+def Miller_Rabin(n:int, _a:int) -> bool:
+    "밀러-라빈 구현부"
     d = (n-1) // 2
     while d % 2 == 0:
-        if pow(_a,d,n) == n-1:
+        if pow(_a, d, n) == n-1:
             return True
         d //= 2
-    t = pow(_a,d,n)
+    t = pow(_a, d, n)
     return True if t in (n-1, 1) else False
 
-_E = [True] * 101
+# 밀러-라빈 최적화를 위한 에라토스테네스의 체
+eras = [True] * 101
 for i in range(2, 11):
-    if _E[i]:
+    if eras[i]:
         for j in range(i*2, 101, i):
-            _E[j] = False
+            eras[j] = False
+
 def isPrime(n:int) -> bool:
     if n <= 1:
         return False
     if n <= 100:
-        return True if _E[n] else False
-    for a in [2, 7, 61]:
-        if not Miller_Rabin(n,a):
+        return True if eras[n] else False
+    for i in checking_primes:
+        if not Miller_Rabin(n, i):
             return False
     return True
 
 def g(x, n):
+    "sudo-prime < n"
     return (x*x + 1) % n
 
 def pollard_rho(n, x):
-    p = x
     if isPrime(n):
         return n
     else:
-        for i in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71]:
+        # 소수가 아니지만, [1, 100] 사이의 소수를 나누는 경우는 최적화를 위해 바로 처리함
+        for i in eras:
             if n % i == 0:
                 return i
-    y = x
+    p = y = x
     d = 1
     while d == 1:
         x = g(x, n)
@@ -51,15 +58,13 @@ def pollard_rho(n, x):
             return d
         else:
             return pollard_rho(d, 2)
-def print_factorization(num):
+
+if __name__ == '__main__':
+    n = int(input())
     ans = []
-    while num != 1:
-        k = pollard_rho(num,2)
+    while n != 1:
+        k = pollard_rho(n, 2)
         ans.append(int(k))
-        num //= k
+        n //= k
     ans.sort()
     print(*ans, sep='\n')
-if __name__ == '__main__':
-    num = int(input())
-    print_factorization(num)
-    
