@@ -16,28 +16,28 @@ def Miller_Rabin(n:int, _a:int) -> bool:
     t = pow(_a, d, n)
     return True if t in (n-1, 1) else False
 
-# 밀러-라빈 최적화를 위한 에라토스테네스의 체
+# 밀러-라빈 최적화를 위한 에라토스테네스의 체 set
 eras = [True] * 101
 for i in range(2, 11):
     if eras[i]:
         for j in range(i*2, 101, i):
             eras[j] = False
+eras = set([i for i in range(101) if eras[i]][2:])
 
 def isPrime(n:int) -> bool:
     if n <= 1:
         return False
     if n <= 100:
-        return True if eras[n] else False
+        return True if n in eras else False
     for i in checking_primes:
         if not Miller_Rabin(n, i):
             return False
     return True
 
-def g(x, n):
-    "sudo-prime < n"
-    return (x*x + 1) % n
-
 def pollard_rho(n, x):
+    def g(x, n):
+        return (x*x + 1) % n
+
     if isPrime(n):
         return n
     else:
