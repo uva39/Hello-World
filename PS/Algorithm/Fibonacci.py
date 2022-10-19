@@ -37,6 +37,7 @@ def f(n):
     if n < len(dp):
         return dp[n]
     k = n//2
+    # TODO: 어떻게 O(lg(N))으로 줄일 수 없을지? f의 호출을 줄이는 식으로??
     a, b, c, d = f(k+1)%p, f(n-k)%p, f(k)%p, f(n-k-1)%p
     return (a*b%p + c*d%p) % p
 
