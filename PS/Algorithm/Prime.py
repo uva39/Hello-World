@@ -1,5 +1,3 @@
-import math
-
 # 필요 시 (2, 7, 61)보다 더 많은 소수 사용
 checking_primes = (2, 7, 61)
 
@@ -12,7 +10,7 @@ for i in range(2, int((size + 2)**0.5)+1):
             eras[j] = False
 eras = set([i for i in range(size) if eras[i]][2:])
 
-def Miller_Rabin(n:int, _a:int) -> bool:
+def miller_rabin(n:int, _a:int) -> bool:
     "밀러-라빈 구현부"
     d = (n-1) // 2
     while d % 2 == 0:
