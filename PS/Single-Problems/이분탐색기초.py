@@ -3,7 +3,7 @@ tree = list(map(int, input().split()))
 start, end = 1, max(tree) 
 
 while start <= end:
-    mid = (start+end) // 2
+    mid = (start + end) // 2
     log = sum(x - mid for x in tree if x >= mid)
     
     if log >= M:
