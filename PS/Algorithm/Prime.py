@@ -27,8 +27,8 @@ def isPrime(n):
         return False
     if n <= size:
         return True if n in eras[n] else False
-    for a in [2, 7, 61]:
-        if not checking_primes(n, a):
+    for a in checking_primes:
+        if not Miller_Rabin(n, a):
             return False
     return True
 
