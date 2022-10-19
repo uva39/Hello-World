@@ -64,7 +64,7 @@ if __name__ == '__main__':
     ans = []
     while n != 1:
         k = pollard_rho(n, 2)
-        ans.append(int(k))
+        ans.append(k)
         n //= k
     ans.sort()
     print(*ans, sep='\n')
