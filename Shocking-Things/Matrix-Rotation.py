@@ -2,7 +2,7 @@
 
 def trace_flip(A:list) -> list:
     """
-    Trace를 기준으로 대칭이 되게 행렬 뒤집기 
+    Trace를 기준으로 대칭이 되도록 행렬 뒤집기 
     (Trace는 보존되고, 그 외는 대칭이 되게 뒤집힘)
     """
     temp = [list(row) for row in list(zip(*A))]
