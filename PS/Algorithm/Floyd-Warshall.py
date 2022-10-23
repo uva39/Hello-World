@@ -14,6 +14,7 @@ for i in range(n):
     distance[i][i] = 0
 
 # 플로이드-워셜
+# k -> i -> j 순으로 반복 돌리는 거 중요!!
 for k in range(n):
     for i in range(n):
         for j in range(n):
