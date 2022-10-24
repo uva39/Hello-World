@@ -2,11 +2,11 @@
 checking_primes = (2, 7, 61)
 
 # 에라스토테네스의 체. n 크기 늘려도 됨
-size = 100
-eras = [True]*(size + 1)
-for i in range(2, int((size + 2)**0.5)+1):
+size = 101
+eras = [True]*size
+for i in range(2, int(size**0.5) + 1):
     if eras[i]:
-        for j in range(i*2, size + 1, i):
+        for j in range(i*2, size, i):
             eras[j] = False
 eras = set([i for i in range(2, size) if eras[i]])
 
