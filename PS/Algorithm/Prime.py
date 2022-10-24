@@ -8,7 +8,7 @@ for i in range(2, int((size + 2)**0.5)+1):
     if eras[i]:
         for j in range(i*2, size + 1, i):
             eras[j] = False
-eras = set([i for i in range(size) if eras[i]][2:])
+eras = set([i for i in range(2, size) if eras[i]])
 
 def miller_rabin(n:int, _a:int) -> bool:
     "밀러-라빈 구현부"
