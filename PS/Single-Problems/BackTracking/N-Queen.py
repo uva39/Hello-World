@@ -1,8 +1,8 @@
 def promising(cdx):
     for i in range(cdx):
         if board[cdx] == board[i] or cdx - i == abs(board[cdx] - board[i]):
-            return 0
-    return 1
+            return False
+    return True
 
 def n_queen(cdx):
     global count
