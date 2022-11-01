@@ -5,3 +5,4 @@ NoteBook.py
 test.csv
 train.csv
 *.jpg
+*.vscode
