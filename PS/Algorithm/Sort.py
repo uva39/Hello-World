@@ -124,37 +124,25 @@ def quick(arr):
     return sort(0, len(arr) - 1)
 
 
-# 병합정렬(Merge Sort): O(NlgN) - O(NlgN) - O(NlgN) - 안정 정렬(Stable Sort)
+# 병합정렬(Merge Sort): O(NlgN) - O(NlgN) - O(NlgN) - Stable
 
-# 퀵정렬과 마찬가지로 분할 정복 (Devide and Conquer) 기법과 재귀 알고리즘을 이용함.
-# 세부 사항은 https://www.daleseo.com/sort-merge/
-# 리스트 슬라이싱을 사용하여 구현할 경우엔, 함수가 간단해지긴 하지만 슬라이싱이 새로운 리스트를 생성하기 때문에 공간복잡도 면에서 마이너스다.
-# 병합정렬은 안그래도 새로운 리스트를 생성하기에 공간복잡도가 살짝 안좋은데, 슬라이싱까지 쓰면 상당히 별로인 정렬이 될 수 있다.
+# 퀵정렬과 마찬가지로 분할 정복 (Devide and Conquer) 이용
+# 리스트 슬라이싱을 사용하여 구현하면 간단하지만, 슬라이싱이 새로운 리스트를 생성하기 때문에 공간복잡도가 안좋다
 
-# 병합 예시: [1], [3], [2], [6]을 병합할 때
-# len(arr) = 1일 때, 1 < 3 => [1, 3] / 2 < 6 => [2, 6] 지금 이 분할된 배열은 "정렬되었다"는 것에 주목하자.
-# 2 이상이면? [1, 3], [2, 6]에서 가장 앞의 원소를 뽑아서 비교하며 병합.
-# 1 < 2 => arr.append(1) 이제 가장 앞의 원소는 3 and 2. / 3 > 2 => arr.append(2) 이제 가장 앞의 원소는 3 and 6
-# 3 < 6 => arr.append(3) 이제 가장 앞의 원소는 None and 6. 여기서 왼쪽 배열의 원소를 전부 병합하는 데에 소진했기에 abort.
-# 그런 뒤, "분할된 배열은 모두 정렬된 상태" 이기에 오른쪽 배열의 남은 원소를 그저 순서대로 append 해주면 병합이 종료된다.
-# arr.append(6)
-
-
-def merge(arr):
+def merge_sort(arr):
     def sort(low, high):
         if high - low < 2:
             return
         mid = (low + high) // 2
         sort(low, mid)
-        sort(mid, high) # sort()를 재귀호출하면서 arr을 분할함
-        merge_sort(low, mid, high) # 그런 다음 merge_sort()를 호출해서 다시 합침
+        sort(mid, high)
+        merge(low, mid, high)
 
-    def merge_sort(low, mid, high):
+    def merge(low, mid, high):
         temp = []
         l, h = low, mid
 
         while l < mid and h < high:
-            # low, mid -> mid, high로 가는 l과 h를 통해 분할된 array를 병합해준다.
             if arr[l] < arr[h]:
                 temp.append(arr[l])
                 l += 1
@@ -162,9 +150,6 @@ def merge(arr):
                 temp.append(arr[h])
                 h += 1
 
-        # and로 이어진 조건에서 당연하게도, l이 mid에, 또는 h가 high에 먼저 도달하여 소진될 것이다.
-        # 이때, 아직 남아있는 부분에 대해서 "비교 연산을 수행하지 않는" 병합을 해준다.
-        # (why? 위의 예시에서 봤듯이 남아있는 부분은 정렬된 상태니까!)
         while l < mid:
             temp.append(arr[l])
             l += 1
@@ -172,19 +157,17 @@ def merge(arr):
             temp.append(arr[h])
             h += 1
 
-        # 이제 temp 배열에 병합을 완료헀다. 이제 원래의 배열에 복사만 하면 된다.
         for i in range(low, high):
             arr[i] = temp[i - low]
-
     return sort(0, len(arr))
-
 
 
 # 힙 정렬(heap sort) - O(NlgN) - O(NlgN) - O(NlgN)
 
-# 가장 단순한 O(NlgN) 알고리즘. 시간복잡도가 비교적 일정하기에 값이 매우 커질 때 특히나 유용하다.
-# 대신, 정렬할 값의 개수가 적을 때엔 오히려 삽입정렬 등의 O(N^2) 알고리즘보다도 성능이 떨어진다.
-# heapq 모듈을 사용하지 않는 경우엔 heapify(), heap class를 따로 구현해야한다.
+# 정렬할 값의 개수가 적을 때엔 오히려 삽입정렬 등의 O(N^2) 알고리즘 보다도 성능이 떨어진다.
+# heapq 모듈을 사용하지 않는 경우엔 이진 검색 트리를 직접 구현해야 하는데,
+# 이진 검색 트리를 실용적으로 구현하기 위해선 잡기술이 너무 많이 필요하다.
+# 우선순위 큐 (Priority Queue) 구현 용도로만 쓰기
 
 import heapq
 def heap(arr):
@@ -196,13 +179,11 @@ def heap(arr):
         arr[i] = heapq.heappop(H)
 
 
-
 # 셸 정렬(Shell Sort): O(NlgN) - gap에 따라 다름 - O(N^1.25)
 
-# 세부사항: https://gmlwjd9405.github.io/2018/05/08/algorithm-shell-sort.html
 # 셸 정렬은 Cell과는 아무 상관 없다. Donald L.Shell이라는 사람이 제안한 방법일 뿐이다(...)
-# 셸 정렬은 기본적으론 삽입 정렬의 업그레이드 버전이다. 삽입 정렬이 원소가 자신의 index에서 아무 멀리 떨어진 index로 이동할 때에,
-# 속도 저하가 크게 발생한다는 점에 착안해서, 정렬할 array를 일정한 gap을 두고 나눈다.
+# 삽입 정렬에선 자신의 index에서 멀리 떨어진 index로 이동할 때에 속도 저하가 크게 발생한다
+# 이를 보완해서 정렬할 array를 일정한 gap을 두고 나눈다
 # 정렬할 배열의 요소를 일정한 gap을 기준으로 나눠 각 그룹 별로 삽입 정렬을 수행하고, 그 그룹을 합치면서 정렬을 반복하여 요소의 총 이동 횟수를 줄인다.
 # 이때 gap을 점점 줄여가며 정렬하는데, 1st cycle : 5 / 2nd cycle : 3 / 3rd cycle : 1 이런 식으로 줄여나간다.
 # ex: [0~99], gap = 5일땐, range(0, 100, 5) range(1, 100, 5) range(2, 100, 5) ...  range(4, 100, 5)를 각각 정렬
@@ -218,18 +199,15 @@ def shell(arr):
         # while문이 끝났을 때 gap이 1이면 종료, 아니면 gap을 바꿔서 반복
 
 
-
-
-# 기수정렬(Radix Sort): O(k/d * n) - O(k/d * n) - O(k/d * n) - 안정 정렬(Stable Sort)
+# 기수정렬(Radix Sort): O(k/d * n) - O(k/d * n) - O(k/d * n) - Stable
 
 # LSD : Least Signigicant Digit, MSD : Most Significant Digit 로 구분된다. 일반적으론 LSD기수정렬을 의미한다.
-# 기수 정렬은 비교연산을 하지 않고, 따라서 모든 비교연산은 시간복잡도가 O(NlgN)보다 낮아질 수 없다는 법칙을 벗어날 수 있다.
+# 기수 정렬은 비교연산을 하지 않고, 따라서 모든 비교연산을 쓴 정렬은 시간복잡도렬 O(NlgN)보다 낮아질 수 없다는 법칙을 벗어날 수 있다.
 # 따라서 O(N)만큼 빨라질 수 있지만, 정렬할 때에 큰 메모리가 필요하고, 정수나 문자열이 아닌 경우 O(NlgN) 알고리즘보다 느려질 수 있다.
 
 # 기수정렬의 정렬방법은 가장 작은 자리수부터 차례로 Counting Sort를 수행하는 것이라고 볼 수도 있다.
 
 from collections import deque
-
 def radix(arr):
     # 이건 10진수를 정렬할 때의 경우고, 알파벳 정렬엔 훨씬 더 많이 필요. (대문자도 들어가면 버킷이 26*2 = 52개???)
     buckets = [deque() for _ in range(10)]
@@ -256,7 +234,3 @@ def radix(arr):
 
     for i in range(len(Q)): # 원래의 배열에 복사
         arr[i] = Q.popleft()
-
-
-
-# 끝. 앞으로 더 필요한 정렬이 있으면 나중에 추가할 예정
