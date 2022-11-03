@@ -36,8 +36,8 @@ int main(){
 }
 
 void selection_sort(int* arr, const int length){
-    int minidx, i, j, temp;
-    for (i = 0; i < length; i++){
+    int minidx, temp, i, j;
+    for (i = 0; i < length - 1; i++){
         minidx = i;
         // 최소값의 인덱스 구하기
         for (j = i+1; j < length; j++){
