@@ -1,7 +1,3 @@
-import sys
-RawData = [*eval("int(sys.stdin.readline().rstrip())," * int(input()))]
-
-
 # 타임소트(Tim Sort): O(N) - O(NlgN) - O(NlgN) - Stable
 
 # 파이썬의 기본 내장 정렬함수가 사용하는 알고리즘
@@ -234,3 +230,7 @@ def radix(arr):
 
     for i in range(len(Q)): # 원래의 배열에 복사
         arr[i] = Q.popleft()
+
+if __name__ == '__main__':
+    arr = [*map(int(), input().split())]
+    # TEST CODE
