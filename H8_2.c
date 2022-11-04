@@ -15,7 +15,7 @@ int main(){
         pointer++;
     }while (getchar() != '\n');
 
-    printf("정렬 이전의 값: ");
+    printf("정렬이전: ");
     for (int i = 0; i < pointer; i++)
         printf("%d, ", a[i]);
     printf("\n");
@@ -23,7 +23,7 @@ int main(){
     selection_sort(a, pointer);
     bubble_sort(b, pointer);
 
-    printf("선택정렬: ");
+    printf("선택 정렬: ");
     for (int i = 0; i < pointer; i++) // a
         printf("%d, ", a[i]);
     printf("\n");
@@ -41,7 +41,7 @@ void selection_sort(int* arr, const int length){
         minidx = i;
         // 최소값의 인덱스 구하기
         for (j = i+1; j < length; j++){
-            if (arr[j] < arr[i])
+            if (arr[j] < arr[minidx])
                 minidx = j;
         }
         // swap
