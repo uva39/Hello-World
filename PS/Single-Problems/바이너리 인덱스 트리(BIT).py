@@ -57,43 +57,17 @@ for i in range(m+k):
     else:
         print(interval_sum(b, c))
 
-
-'''
-# 주석 제거 version
-
-import sys
-input = sys.stdin.readline
-
-n, m, k = map(int, input().split())
-
-arr = [0]*(n+1)
-tree = [0]*(n+1)
-
-def update(i, diff):
-    while i <= n:
-        tree[i] += diff
-        i += (i & -i)
-
-def interval_sum(start, end):
-    def p_sum(i):
+# 다른 방법(class)로 Fenwick tree 구현
+class Fenwick:
+    def __init__(self, size) -> None:
+        self.arr = [0] * size
+    def add(self, i, value):
+        while i < len(self.arr):
+            self.arr[i] += value
+            i |= i + 1
+    def sum(self, i):
         result = 0
-        while i > 0:
-            result += tree[i]
-            i -= (i & -i)
+        while i >= 0:
+            result += self.arr[i]
+            i = (i & (i + 1)) - 1
         return result
-    return p_sum(end) - p_sum(start-1)
-
-for i in range(1, n+1):
-    x = int(input())
-    arr[i] = x
-    update(i, x)
-    
-for i in range(m+k):
-    a, b, c = map(int, input().split())
-    if a == 1:
-        update(b, c - arr[b])
-        arr[b] = c
-    else:
-        print(interval_sum(b, c))
-    
-'''
