@@ -1,3 +1,20 @@
+# class로 Fenwick tree 구현
+class Fenwick:
+    def __init__(self, size) -> None:
+        self.arr = [0] * size
+    def add(self, i, value):
+        while i < len(self.arr):
+            self.arr[i] += value
+            i |= i + 1
+    def sum(self, i):
+        result = 0
+        while i >= 0:
+            result += self.arr[i]
+            i = (i & (i + 1)) - 1
+        return result
+
+exit(0)
+# 다른 방법
 import sys
 input = sys.stdin.readline
 
@@ -57,17 +74,3 @@ for i in range(m+k):
     else:
         print(interval_sum(b, c))
 
-# 다른 방법(class)로 Fenwick tree 구현
-class Fenwick:
-    def __init__(self, size) -> None:
-        self.arr = [0] * size
-    def add(self, i, value):
-        while i < len(self.arr):
-            self.arr[i] += value
-            i |= i + 1
-    def sum(self, i):
-        result = 0
-        while i >= 0:
-            result += self.arr[i]
-            i = (i & (i + 1)) - 1
-        return result
