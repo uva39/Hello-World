@@ -1,0 +1,1 @@
+f a b c d = (succ a) + (max b c) + d
