@@ -1,1 +1,5 @@
-f a b c d = (succ a) + (max b c) + d
+f [] = []
+f (x:xs) = f ys ++ [x] ++ zs
+           where
+             ys = [a | a <- xs, a <= x]
+             zs = [b | b <- xs, b > x]
