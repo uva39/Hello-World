@@ -5,15 +5,16 @@ quicksort (x:xs) = left ++ [x] ++ right
     left = quicksort [a | a <- xs, a <= x]
     right = quicksort [a | a <- xs, a > x]
 -- in-place가 아닌 퀵소트 구현
+-- quicksort [] = [] 은 pattern-matching
 
 factorial n = product [1..n]
 palindrome xs = reverse xs == xs
 
 abs n = if n >= 0 then n else -n
-signum n = 
-  if n > 0 then 1 
-  else if n < 0 then -1 
-  else 0
+perceptron n
+  | n > 0 = 1
+  | n < 0 = -1
+  | otherwise = 0
 
 minus = \x -> \y -> x - y
 
