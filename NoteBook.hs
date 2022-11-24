@@ -115,3 +115,11 @@ map2D' f xs = map (\ys -> map f ys) xs
 -- 즉, map (row에 map을 해주는 람다함수) xs
 -- mapnD도 같은 방식으로 만들 수 있음.
 -- 이거 쓰면 행렬에 map 간단하게 할 수 있을듯?
+
+
+-- fold 예제모음. currying된 함수라서 뒤에 List 붙여주면 작동
+count e = foldr (\x acc -> if x == e then acc + 1 else acc) 0
+isAll e = foldr (\x -> (&&) $ x == e) True
+-- length'' = foldr (\x -> (+) 1) 0
+-- length''' = foldr (const $ (+) 1) 0 -- 뭔지 모르겠음
+map' f = foldr ((:) . f) []
