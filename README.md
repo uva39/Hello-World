@@ -1,10 +1,4 @@
 # Hello-World
 
-원래 있던 StudyNote라는 리포지토리가 조금 난잡하게 쓰여있어서
-정리용으로 새로운 리포지토리를 만들었습니다.  
-
-* 파이썬 자체 문법이나 내장 라이브러리 관련한 신기한 잡기술
-* Numpy, Pandas, Matplotlib 등의 라이브러리 꿀팁
-* PS 알고리즘, 문제풀이 아이디어
-* 인공지능, 데이터분석, 강화학습
-등을 다룹니다.
+개인 공부 정리용 레포지토리입니다.  
+This is a repository for personal study notes.  
