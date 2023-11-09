@@ -6,6 +6,8 @@ import torch.optim as optim
 from torch.distributions.categorical import Categorical
 
 chkpt_dir = os.path.join('AI', 'reinforcement-learning', 'PracticePPO', 'saves')
+if __name__=='__main__':
+    print(T.cuda.is_available())
 
 class PPOMemory:
     def __init__(self, batch_size):
